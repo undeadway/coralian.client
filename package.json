@@ -1,0 +1,34 @@
+{
+  "name": "coralian",
+  "version": "0.0.16",
+  "description": "The base expands library of Javascript",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitee.com/undeadway/coralian.git"
+  },
+  "keywords": [
+    "expands",
+    "javascript"
+  ],
+  "author": "hzwaygc@gmail.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://gitee.com/undeadway/coralian/issues"
+  },
+  "homepage": "http://codes.waygc.net/project/?coralian.client",
+  "dependencies": {
+    "coralian": "0.0.17",
+  },
+  "devDependencies": {
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  },
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  }
+}
