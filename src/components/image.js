@@ -1,19 +1,19 @@
-const { getScrollTop } = require("./parts");
+const { getScrollTop, doc } = require("./parts");
+
+var album = doc.createElement('div');
+album.zIndex = "2";
+album.style.position = "absolute";
+var img = doc.createElement('img');
+album.onclick = Function.EMPTY_BODY;
+var background = doc.createElement('div');
+background.onclick = close;
+var body = null;
 
 function close() {
 	album.removeChild(img);
 	body.remove(album);
 	body.remove(background);
 }
-
-var album = document.createElement('div');
-album.zIndex = "2";
-album.style.position = "absolute";
-var img = document.createElement('img');
-album.onclick = Function.EMPTY_BODY;
-var background = document.createElement('div');
-background.onclick = close;
-var body = null;
 
 exports = module.exports = {
 	resize: function (obj) {
@@ -27,7 +27,7 @@ exports = module.exports = {
 	},
 	protoSize: function (obj) {
 
-		var scrollHeight = document.documentElement.scrollHeight; // 滚动条高度，也就是整个页面的高度
+		var scrollHeight = doc.documentElement.scrollHeight; // 滚动条高度，也就是整个页面的高度
 
 		if (body === null) {
 			body = $("body");

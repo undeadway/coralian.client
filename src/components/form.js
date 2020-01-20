@@ -1,7 +1,6 @@
 $.fn.parseForm = function () {
 	var serializeObj = {};
 	var array = this.serializeArray();
-	var str = this.serialize();
 	$(array).each(function () {
 		if (serializeObj[this.name]) {
 			if ($.isArray(serializeObj[this.name])) {
@@ -18,7 +17,7 @@ $.fn.parseForm = function () {
 
 module.exports = function (index = 0) {
 
-	const frm = $(document.forms[index]);
+	let frm = $(document.forms[index]);
 
 	return {
 		reset: function () {

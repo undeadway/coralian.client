@@ -7,5 +7,6 @@ Coralian.client = {
 	form: require("./components/form"),
 	Image: require("./components/image"),
 	screen: require("./components/screen"),
-	Validator: require("./components/validator")
+	Validator: require("./components/validator"),
+	Menu: require("./components/menu")
 };
