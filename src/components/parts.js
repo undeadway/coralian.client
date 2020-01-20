@@ -25,3 +25,5 @@ function newWindow() {
 	return window.open.apply(null, arguments);
 }
 exports.newWindow = newWindow;
+
+exports.doc = document;

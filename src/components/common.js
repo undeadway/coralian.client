@@ -1,4 +1,4 @@
-const { newWindow } = require("./parts");
+const { newWindow, doc } = require("./parts");
 
 exports = module.exports = {
 	cutTitle: function (str, max, cut) {

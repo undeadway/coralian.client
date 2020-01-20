@@ -2,8 +2,8 @@ const { getScrollTop } = require("./parts");
 
 function close() {
 	album.removeChild(img);
-	body.removeChild(album);
-	body.removeChild(background);
+	body.remove(album);
+	body.remove(background);
 }
 
 var album = document.createElement('div');
@@ -30,7 +30,7 @@ exports = module.exports = {
 		var scrollHeight = document.documentElement.scrollHeight; // 滚动条高度，也就是整个页面的高度
 
 		if (body === null) {
-			body = document.body;
+			body = $("body");
 			background.zIndex = "1";
 			background.style.width = "100%";
 			background.style.height = scrollHeight + "px";
@@ -75,9 +75,9 @@ exports = module.exports = {
 		img.width = protoWidth;
 		img.title = obj.title;
 
-		body.appendChild(background);
+		body.append(background);
 		album.appendChild(img);
-		body.appendChild(album);
+		body.append(album);
 	},
 	closeAlbum: close
 };

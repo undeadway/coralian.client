@@ -1,4 +1,4 @@
-const { getScrollTop } = require("./parts");
+const { getScrollTop, doc } = require("./parts");
 
 exports = module.exports = {
 	/*
