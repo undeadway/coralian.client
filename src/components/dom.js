@@ -1,6 +1,10 @@
 module.exports = exports = {
 	create: function (tag, attr, html) {
 		var element = $(`<${tag}></${tag}>`);
+		if (typeIs(attr, 'string')) {
+			html = attr;
+			attr = null;
+		}
 		if (!Object.isEmpty(attr)) {
 			element.attr(attr);
 		}

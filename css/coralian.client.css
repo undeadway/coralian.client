@@ -3,7 +3,7 @@ body {
 	padding:0px;
 }
 
-/* Coralian.client.Menu */
+/* 菜单 */
 .menubar_box {
 	margin:10px; border:1px solid #000099; border-bottom:0px;
 	font-size:10pt; width:calc(100% - 20px); background:#F7F7F7;
@@ -39,3 +39,5 @@ body {
 .list_menu div:hover {
 	background: #F0F0F0;
 }
+
+/* 分页 */
