@@ -1,15 +1,17 @@
 const HtmlTag = Coralian.constants.HtmlTag;
 const GO_NEXT = Coralian.constants.XmlEntity.RIGHT_ANGLE + Coralian.constants.XmlEntity.RIGHT_ANGLE,
 	GO_PREV = Coralian.constants.XmlEntity.LEFT_ANGLE + Coralian.constants.XmlEntity.LEFT_ANGLE,
-	GO_LAST = Coralian.constants.XmlEntity.RIGHT_ANGLE + "|",
+	GO_LAST = "|" + Coralian.constants.XmlEntity.RIGHT_ANGLE,
 	GO_FIRST = Coralian.constants.XmlEntity.LEFT_ANGLE + "|";
+
+const dom = require("./dom");
 
 function loading(name) {
 	let p = dom.create(HtmlTag.P, {
 		'class': 'onload'
-	}, `${name} 数据载入中`);
+	});
 
-	p.append('<img src="/res/imgs/default/loading.gif" title="loading" />');
+	p.append(`<img src="/res/imgs/default/loading.gif" title="loading" /> ${name} 数据载入中`);
 
 	return p;
 }
@@ -30,13 +32,7 @@ function showLoop(pages, reqArg, start, now, end) {
 	} else {
 		for (; start < end; start++) {
 			if (start !== now) {
-				pages.append(dom.create(HtmlTag.A, {
-					'class': 'showpage',
-					href: toPageJs(reqArg, start),
-					title: '前往第 ' + (start + 1) + ' 页'
-				}, start + 1));
-				// pages.append('<a class="showpage" href="javascript:front.page.show(' + changeId + ',' + start +
-				// 	')" title="前往第 ' + (start + 1) + ' 页">' + (start + 1) + '</a>');
+				pages.append(createGoPage(reqArg, start));
 			} else {
 				pages.append(dom.create(HtmlTag.SPAN, {
 					class: 'nowpage',
@@ -50,21 +46,88 @@ function showLoop(pages, reqArg, start, now, end) {
 const MORE_NODE = "...";
 
 function toFirstJs(reqArg) {
-	return `javascript: front.paging.change(${reqArg}, 0)`;
+	return front.paging.change(reqArg, 0);
 }
 
 function toLastJs(reqArg, total) {
-	return `javascript: front.paging.change(${reqArg}, ${total})`;
+	return front.paging.change(reqArg, total);
 }
 
 function toPageJs(reqArg, now) {
-	return `javascript: front.paging.change(${reqArg}, ${now})`
+	return front.paging.change(reqArg, now);
 }
 
+function createGoPage(reqArg, pageNo) {
+
+	let goPage = dom.create(HtmlTag.A, {
+		'class': 'showpage',
+		title: '前往第 ' + (pageNo + 1) + ' 页'
+	}, pageNo + 1);
+
+	goPage.on('click', function () {
+		toPageJs(reqArg, pageNo)
+	});
+
+	return goPage;
+}
+
+function createGoFirst(reqArg) {
+
+	let goFirst = dom.create(HtmlTag.A, {
+		'class': "tofirst",
+		title: '前往第一页'
+	}, GO_FIRST);
+
+	goFirst.on('click', function () {
+		toFirstJs(reqArg);
+	});
+
+	return goFirst;
+}
+
+function createGoPrev(reqArg, now) {
+
+	let goPrev = dom.create(HtmlTag.A, {
+		'title': '前往上一页（' + now + '）'
+	}, GO_PREV);
+	goPrev.on('click', function () {
+		toPageJs(reqArg, now - 1);
+	});
+
+	return goPrev;
+}
+
+function createGoNext(reqArg, now, total) {
+
+	let goNext = dom.create(HtmlTag.A, {
+		'class': "nextpage",
+		title: '前往下一页（' + (now + 2) + '）'
+	}, GO_NEXT);
+
+	goNext.on('click', function () {
+		toPageJs(reqArg, now + 1, total);
+	});
+
+	return goNext;
+}
+
+function createGoLast(reqArg, total) {
+
+	let goLast = dom.create(HtmlTag.A, {
+		'class': "toend",
+		title: '前往最终页（' + (total + 1) + '）'
+	}, GO_LAST);
+
+	goLast.on('click', function () {
+		toLastJs(reqArg, total);
+	});
+
+	return goLast;
+}
 
 function paging(id) {
 
-	let pages = $(`#${id}`); // 必须是已有的节点
+	let pages = $(id); // 必须是已有的节点
 	let reqArg = null;
 
 	function clear() {
@@ -95,16 +158,8 @@ function paging(id) {
 				if (now < 4) { // 写4的原因是在按到5时，已经是最后一页，所以需要进行换页操作，使用下一种表法方式来表达
 					showLoop(pages, reqArg, 0, now, 5);
 					pages.append(MORE_NODE);
-					pages.append(dom.create(HtmlTag.A, {
-						'class': "nextpage",
-						'href': toPageJs(reqArg, now + 1, total),
-						title: '前往下一页（' + (now + 2) + '）'
-					}, GO_NEXT));
-					pages.append(dom.create(HtmlTag.A, {
-						'class': "toend",
-						'href': toLastJs(reqArg, total),
-						title: '前往最终页（' + (total + 1) + '）'
-					}, GO_LAST));
+					pages.append(createGoNext(reqArg, now, total));
+					pages.append(createGoLast(reqArg, total));
 				}
 				/*
 				 * total > 10 && now > total - 4
@@ -112,16 +167,8 @@ function paging(id) {
 				 * |< << ... 19 20 21 22 23
 				 */
 				else if (total - 4 < now) {
-					pages.append(dom.create(HtmlTag.A, {
-						'class': "tofirst",
-						'href': toFirstJs(reqArg),
-						title: '前往第一页'
-					}, GO_LAST));
-					pages.append(dom.create(HtmlTag.A, {
-						'class': "prevpage",
-						'href': toPageJs(reqArg, now - 1),
-						title: '"前往上一页（' + now + '）'
-					}, GO_PREV));
+					pages.append(createGoFirst(reqArg));
+					pages.append(createGoPrev(reqArg, now));
 					pages.append(MORE_NODE);
 					showLoop(pages, reqArg, total - 4, now, total + 1);
 				}
@@ -131,28 +178,13 @@ function paging(id) {
 				 * |< << ... 13 14 15 16 17 ... >> >|
 				 */
 				else {
-
-					pages.append(dom.create(HtmlTag.A, {
-						"javascript": toFirstJs(reqArg),
-						'title': "前往第一页"
-					}, GO_FIRST));
-					pages.append(dom.create(HtmlTag.A, {
-						"javascript": toPageJs(reqArg, now - 1),
-						'title': '前往上一页（' + now + '）'
-					}, GO_PREV));
-
+					pages.append(createGoFirst(reqArg));
+					pages.append(createGoPrev(reqArg, now));
 					pages.append(MORE_NODE);
 					showLoop(pages, reqArg, now - 2, now, now + 3);
 					pages.append(MORE_NODE);
-
-					pages.append(dom.create(HtmlTag.A, {
-						"javascript": toPageJs(reqArg, now + 1),
-						'title': '前往下一页（' + (now + 2) + '）'
-					}, GO_NEXT));
-					pages.append(dom.create(HtmlTag.A, {
-						'href': toLastJs(reqArg, total),
-						'title': '前往最终页（' + (total + 1) + '）'
-					}, GO_LAST));
+					pages.append(createGoNext(reqArg, now, total));
+					pages.append(createGoLast(reqArg, total));
 				}
 			}
 		},
