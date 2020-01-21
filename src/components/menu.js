@@ -36,6 +36,7 @@
 	}
 }
  */
+// 因为考虑到一个也米嗯中可能有多个menu，所以这里不设置单例
 module.exports = exports = function () {
 
 	let nodeList = []; // 所有子节点
