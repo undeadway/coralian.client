@@ -13,21 +13,21 @@ body {
 	display: inline-block;
 	padding: 3px 4px;
 }
-.menubar_item {
+.menubar_box .menubar_item {
 	position: relative;
 	cursor: pointer;
 }
-.menu_list {
+.menubar_box .menu_list {
 	position: absolute;
 	margin: 0px;
 	padding:0px;
 }
 
-.list_menu {
+.menubar_box .list_menu {
 	list-style: none;
 }
 
-.list_menu div {
+.menubar_box .list_menu div {
 	background:#F7F7F7;
 	margin: 0px;
 	width: 100px;
@@ -36,30 +36,30 @@ body {
 	cursor: pointer;
 }
 
-.list_menu div:hover {
+.menubar_box .list_menu div:hover {
 	background: #F0F0F0;
 }
 
 /* 分页 */
-.page .loading{
+.paging .loading{
 	text-align:left;
 }
-.page span, .page a{
+.paging span, .paging a{
 	margin:0px 7px; 
 	display:inline-table; 
 	padding:4px 10px; 
 	cursor:pointer; 
 	text-align:center;
 }
-.page span:hover, .page a{
+.paging span:hover, .paging a{
 	background:#edffc9;
 }
-.page span, .page a:hover{
+.paging span, .paging a:hover{
 	background:#e9f5dc;
 }
-.page a:hover{
+.paging a:hover{
 	color:#FF0000;
 }
-.page span{
+.paging span{
 	font-weight: bold;
 }
