@@ -75,7 +75,7 @@ module.exports = exports = function () {
 		if (typeIs(val, 'undefined')) {
 			val = String.BLANK;
 		}
-		if (typeIs(val, 'object')) {
+		if (typeIs(val, Object.TYPE_NAME)) {
 			attr = val;
 			val = String.BLANK;
 		}
