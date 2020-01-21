@@ -41,3 +41,25 @@ body {
 }
 
 /* 分页 */
+.page .loading{
+	text-align:left;
+}
+.page span, .page a{
+	margin:0px 7px; 
+	display:inline-table; 
+	padding:4px 10px; 
+	cursor:pointer; 
+	text-align:center;
+}
+.page span:hover, .page a{
+	background:#edffc9;
+}
+.page span, .page a:hover{
+	background:#e9f5dc;
+}
+.page a:hover{
+	color:#FF0000;
+}
+.page span{
+	font-weight: bold;
+}
