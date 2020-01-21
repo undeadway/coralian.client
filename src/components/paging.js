@@ -22,7 +22,7 @@ function failed(name) {
 	}, `${name} 数据载入失败`);
 }
 
-function showLoop(pages, reqArg, start, now, end) {
+function showLoop(pages, reqArg, start, now, end, callback) {
 
 	if (end === 0) {
 		pages.append(dom.create(HtmlTag.SPAN, {
@@ -32,7 +32,7 @@ function showLoop(pages, reqArg, start, now, end) {
 	} else {
 		for (; start < end; start++) {
 			if (start !== now) {
-				pages.append(createGoPage(reqArg, start));
+				pages.append(createGoPage(reqArg, start, callback));
 			} else {
 				pages.append(dom.create(HtmlTag.SPAN, {
 					class: 'nowpage',
@@ -45,19 +45,19 @@ function showLoop(pages, reqArg, start, now, end) {
 
 const MORE_NODE = "...";
 
-function toFirstJs(reqArg) {
-	return front.paging.change(reqArg, 0);
-}
+// function toFirstJs(reqArg) {
+// 	return front.paging.change(reqArg, 0);
+// }
 
-function toLastJs(reqArg, total) {
-	return front.paging.change(reqArg, total);
-}
+// function toLastJs(reqArg, total) {
+// 	return front.paging.change(reqArg, total);
+// }
 
-function toPageJs(reqArg, now) {
-	return front.paging.change(reqArg, now);
-}
+// function toPageJs(reqArg, now) {
+// 	return front.paging.change(reqArg, now);
+// }
 
-function createGoPage(reqArg, pageNo) {
+function createGoPage(reqArg, pageNo, callback) {
 
 	let goPage = dom.create(HtmlTag.A, {
 		'class': 'showpage',
@@ -65,13 +65,13 @@ function createGoPage(reqArg, pageNo) {
 	}, pageNo + 1);
 
 	goPage.on('click', function () {
-		toPageJs(reqArg, pageNo)
+		callback(reqArg, pageNo)
 	});
 
 	return goPage;
 }
 
-function createGoFirst(reqArg) {
+function createGoFirst(reqArg, callback) {
 
 	let goFirst = dom.create(HtmlTag.A, {
 		'class': "tofirst",
@@ -79,25 +79,25 @@ function createGoFirst(reqArg) {
 	}, GO_FIRST);
 
 	goFirst.on('click', function () {
-		toFirstJs(reqArg);
+		callback(reqArg);
 	});
 
 	return goFirst;
 }
 
-function createGoPrev(reqArg, now) {
+function createGoPrev(reqArg, now, callback) {
 
 	let goPrev = dom.create(HtmlTag.A, {
 		'title': '前往上一页（' + now + '）'
 	}, GO_PREV);
 	goPrev.on('click', function () {
-		toPageJs(reqArg, now - 1);
+		callback(reqArg, now - 1);
 	});
 
 	return goPrev;
 }
 
-function createGoNext(reqArg, now, total) {
+function createGoNext(reqArg, now, total, callback) {
 
 	let goNext = dom.create(HtmlTag.A, {
 		'class': "nextpage",
@@ -105,13 +105,13 @@ function createGoNext(reqArg, now, total) {
 	}, GO_NEXT);
 
 	goNext.on('click', function () {
-		toPageJs(reqArg, now + 1, total);
+		callback(reqArg, now + 1, total);
 	});
 
 	return goNext;
 }
 
-function createGoLast(reqArg, total) {
+function createGoLast(reqArg, total, callback) {
 
 	let goLast = dom.create(HtmlTag.A, {
 		'class': "toend",
@@ -119,7 +119,7 @@ function createGoLast(reqArg, total) {
 	}, GO_LAST);
 
 	goLast.on('click', function () {
-		toLastJs(reqArg, total);
+		callback(reqArg, total);
 	});
 
 	return goLast;
@@ -138,7 +138,7 @@ function paging(id) {
 		init: (arg) => {
 			reqArg = arg; // 外部参数
 		},
-		show: (now, total) => {
+		show: (now, total, callback) => {
 
 			clear(); // 每次都要先清空内部元素
 
@@ -148,7 +148,7 @@ function paging(id) {
 			 * 1 2 3 4 5 6 7 8 9 10
 			 */
 			if (total < 10) {
-				showLoop(pages, changeId, 0, now, total + 1);
+				showLoop(pages, reqArg, 0, now, total + 1, callback);
 			} else {
 				/*
 				 * total > 10 && now < 4
@@ -156,10 +156,10 @@ function paging(id) {
 				 * 1 2 3 4 5 ... >> >|
 				 */
 				if (now < 4) { // 写4的原因是在按到5时，已经是最后一页，所以需要进行换页操作，使用下一种表法方式来表达
-					showLoop(pages, reqArg, 0, now, 5);
+					showLoop(pages, reqArg, 0, now, 5, callback);
 					pages.append(MORE_NODE);
-					pages.append(createGoNext(reqArg, now, total));
-					pages.append(createGoLast(reqArg, total));
+					pages.append(createGoNext(reqArg, now, total, callback));
+					pages.append(createGoLast(reqArg, total, callback));
 				}
 				/*
 				 * total > 10 && now > total - 4
@@ -167,10 +167,10 @@ function paging(id) {
 				 * |< << ... 19 20 21 22 23
 				 */
 				else if (total - 4 < now) {
-					pages.append(createGoFirst(reqArg));
-					pages.append(createGoPrev(reqArg, now));
+					pages.append(createGoFirst(reqArg, callback));
+					pages.append(createGoPrev(reqArg, now, callback));
 					pages.append(MORE_NODE);
-					showLoop(pages, reqArg, total - 4, now, total + 1);
+					showLoop(pages, reqArg, total - 4, now, total + 1, callback);
 				}
 				/*
 				 * total > 10 && now < total - 4 && now > 4
@@ -178,13 +178,13 @@ function paging(id) {
 				 * |< << ... 13 14 15 16 17 ... >> >|
 				 */
 				else {
-					pages.append(createGoFirst(reqArg));
-					pages.append(createGoPrev(reqArg, now));
+					pages.append(createGoFirst(reqArg, callback));
+					pages.append(createGoPrev(reqArg, now, callback));
 					pages.append(MORE_NODE);
-					showLoop(pages, reqArg, now - 2, now, now + 3);
+					showLoop(pages, reqArg, now - 2, now, now + 3, callback);
 					pages.append(MORE_NODE);
-					pages.append(createGoNext(reqArg, now, total));
-					pages.append(createGoLast(reqArg, total));
+					pages.append(createGoNext(reqArg, now, total, callback));
+					pages.append(createGoLast(reqArg, total, callback));
 				}
 			}
 		},
