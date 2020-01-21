@@ -128,17 +128,13 @@ function createGoLast(reqArg, total, callback) {
 function paging(id) {
 
 	let pages = $(id); // 必须是已有的节点
-	let reqArg = null;
 
 	function clear() {
 		pages.empty();
 	}
 
 	return {
-		init: (arg) => {
-			reqArg = arg; // 外部参数
-		},
-		show: (now, total, callback) => {
+		show: (now, reqArg, total, callback) => {
 
 			clear(); // 每次都要先清空内部元素
 
