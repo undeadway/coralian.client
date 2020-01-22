@@ -1,8 +1,8 @@
 const HtmlTag = Coralian.constants.HtmlTag;
 const GO_NEXT = Coralian.constants.XmlEntity.RIGHT_ANGLE + Coralian.constants.XmlEntity.RIGHT_ANGLE,
 	GO_PREV = Coralian.constants.XmlEntity.LEFT_ANGLE + Coralian.constants.XmlEntity.LEFT_ANGLE,
-	GO_LAST = "|" + Coralian.constants.XmlEntity.RIGHT_ANGLE,
-	GO_FIRST = Coralian.constants.XmlEntity.LEFT_ANGLE + "|";
+	GO_LAST = Coralian.constants.XmlEntity.RIGHT_ANGLE + "|",
+	GO_FIRST = "|" + Coralian.constants.XmlEntity.LEFT_ANGLE;
 
 const dom = require("./dom");
 
