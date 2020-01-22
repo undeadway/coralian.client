@@ -74,8 +74,8 @@ function setting(node, width, height, callback) {
  */
 function marquee({ id, tag, width, height, direction, speed, space, stop }) {
 
-	var intervalID;
-	var target = document.getElementById(id);
+	let intervalID;
+	let target = document.getElementById(id);
 
 	setting(target, width, height, function (innerDiv) {
 
@@ -115,7 +115,7 @@ function marquee({ id, tag, width, height, direction, speed, space, stop }) {
 				}
 				break;
 			default:
-				var e = new Error("错误的方向");
+				let e = new Error("错误的方向");
 				alert(direction);
 				alert(e.stack);
 				throw e;

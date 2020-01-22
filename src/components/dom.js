@@ -1,5 +1,5 @@
 function create(tag, attr, html) {
-	var element = $(`<${tag}></${tag}>`);
+	let element = $(`<${tag}></${tag}>`);
 	if (typeIs(attr, String.TYPE_NAME)) {
 		html = attr;
 		attr = null;
@@ -16,7 +16,7 @@ function create(tag, attr, html) {
 function createByJsObject(root, objs) {
 
 	Array.forEach(objs, (i, obj) => {
-		var node = create(obj.tag, obj.attr, obj.text);
+		let node = create(obj.tag, obj.attr, obj.text);
 		if (obj.child) {
 			createByJsObject(node, obj.child);
 		}

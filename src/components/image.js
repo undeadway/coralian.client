@@ -7,7 +7,7 @@ let img = doc.createElement('img');
 album.onclick = Function.EMPTY_BODY;
 let background = doc.createElement('div');
 background.onclick = close;
-var body = null;
+let body = null;
 
 function close() {
 	album.removeChild(img);
@@ -27,7 +27,7 @@ exports = module.exports = {
 	},
 	protoSize: function (obj) {
 
-		var scrollHeight = doc.documentElement.scrollHeight; // 滚动条高度，也就是整个页面的高度
+		let scrollHeight = doc.documentElement.scrollHeight; // 滚动条高度，也就是整个页面的高度
 
 		if (body === null) {
 			body = $("body");
@@ -40,11 +40,11 @@ exports = module.exports = {
 			background.style.left = "0px";
 			background.style.top = "0px";
 		}
-		var innerHeight = window.innerHeight; // 页面可视高度
-		var innerWidth = window.innerWidth; // 页面可视宽度
-		var protoHeight = obj.proto.height; // 图像原始高度
-		var protoWidth = obj.proto.width; // 图像原始宽度
-		var top, left;
+		let innerHeight = window.innerHeight; // 页面可视高度
+		let innerWidth = window.innerWidth; // 页面可视宽度
+		let protoHeight = obj.proto.height; // 图像原始高度
+		let protoWidth = obj.proto.width; // 图像原始宽度
+		let top, left;
 		if (protoHeight < innerHeight) { // 图像高度 < 页面可视高度
 			// 页面正中显示
 			top = (innerHeight - protoHeight) / 2;
