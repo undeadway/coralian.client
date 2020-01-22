@@ -32,5 +32,14 @@ module.exports = exports = {
 			objs = JSON.parse(objs);
 		}
 		createByJsObject(root, objs);
+	},
+	findById: function(id) {
+		return document.getElementById(id);
+	},
+	findByClass: function(className) {
+		return document.getElementsByClassName(className);
+	},
+	findByTag: function(tagName) {
+		return document.getElementsByTagName(tagName);
 	}
 }

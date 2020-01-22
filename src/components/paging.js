@@ -36,7 +36,7 @@ function showLoop(pages, reqArg, start, now, end, callback) {
 			} else {
 				pages.append(dom.create(HtmlTag.SPAN, {
 					class: 'nowpage',
-					title: '当前页 (' + now + 1 + '）'
+					title: '当前页 (' + (now + 1) + '）'
 				}, now + 1));
 			}
 		}
