@@ -1,5 +1,4 @@
 const { getScrollTop, newWindow, doc } = require("./parts");
-const dom = require("./dom");
 
 exports = module.exports = {
 	/*
