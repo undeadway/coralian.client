@@ -1,11 +1,11 @@
 const { getScrollTop, doc } = require("./parts");
 
-var album = doc.createElement('div');
+let album = doc.createElement('div');
 album.zIndex = "2";
 album.style.position = "absolute";
-var img = doc.createElement('img');
+let img = doc.createElement('img');
 album.onclick = Function.EMPTY_BODY;
-var background = doc.createElement('div');
+let background = doc.createElement('div');
 background.onclick = close;
 var body = null;
 
