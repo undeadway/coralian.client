@@ -117,7 +117,7 @@ module.exports = exports = function () {
 			override(layer, listItem, subLists);
 
 			if (subData.list) {
-				var subList = createChild(layer + 1, subData, events);
+				let subList = createChild(layer + 1, subData, events);
 				listItem.append(subList); // 循环递归创建子目录
 				subLists.push(subList);
 

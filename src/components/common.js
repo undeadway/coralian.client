@@ -1,5 +1,4 @@
 const { getScrollTop, newWindow, doc } = require("./parts");
-const dom = require("./dom");
 
 exports = module.exports = {
 	/*
@@ -8,10 +7,10 @@ exports = module.exports = {
 	 */
 	toPageTop: function () {
 
-		var toTop = getScrollTop();
+		let toTop = getScrollTop();
 
 		// 设置计时器，50毫秒间隔；
-		var toTopTimer = setInterval(function () {
+		let toTopTimer = setInterval(function () {
 
 			// 设置速度，用等式而不用具体数值是为了产生缓动效果；
 			toTop -= Math.ceil(toTop / 5);
@@ -27,8 +26,8 @@ exports = module.exports = {
 	getScrollTop: getScrollTop,
 	getOffsetTop: function (o) {
 
-		var top = 0;
-		var offsetParent = o;
+		let top = 0;
+		let offsetParent = o;
 
 		while (offsetParent != null && offsetParent != document.body) {
 
@@ -40,11 +39,11 @@ exports = module.exports = {
 	},
 	stopOnScreen: (function () {
 
-		var elements = {};
+		let elements = {};
 		elements.id = [];
 		window.onscroll = function () {
-			var top = getScrollTop();
-			var id = elements.id;
+			let top = getScrollTop();
+			let id = elements.id;
 			for (let i = 0, len = id.length; i < len; i++) {
 				let element = elements[id[i]];
 
@@ -78,8 +77,8 @@ exports = module.exports = {
 	},
 	newWindow: newWindow,
 	pathArray: function () {
-		var path = (doc.location.href).split('/');
-		var arr = path[path.length - 1].split('.');
+		let path = (doc.location.href).split('/');
+		let arr = path[path.length - 1].split('.');
 		return arr;
 	}
 }

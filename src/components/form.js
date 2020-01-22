@@ -1,6 +1,6 @@
 $.fn.parseForm = function () {
-	var serializeObj = {};
-	var array = this.serializeArray();
+	let serializeObj = {};
+	let array = this.serializeArray();
 	$(array).each(function () {
 		if (serializeObj[this.name]) {
 			if ($.isArray(serializeObj[this.name])) {
@@ -25,10 +25,10 @@ module.exports = function (index = 0) {
 		},
 		submit: function (url, before, after) {
 
-			var data = frm.parseForm();
+			let data = frm.parseForm();
 			// 前切片
 			if (!!before) {
-				var result = before(data);
+				let result = before(data);
 				// 当返回 false 的时候，直接退出博客提交
 				if (!result) return;
 			}
