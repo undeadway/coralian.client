@@ -1,5 +1,5 @@
 # Chinese
-[Coralian](http://codes.waygc.net/project/?coralian) 的客户端实现，包含了一些常用的操作。  
+[Coralian](http://prj.waygc.net/?coralian) 的客户端实现，包含了一些常用的操作。  
 依赖于 `jQuery` 和 `Coralian`。
 
 ## 功能
