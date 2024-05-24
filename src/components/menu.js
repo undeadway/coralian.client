@@ -122,7 +122,7 @@ module.exports = exports = function () {
 				subLists.push(subList);
 
 				button.attr({
-					'style': 'background-image:url(./../icons/arr_r_b.png);background-position:right center;background-repeat:no-repeat;'
+					'style': 'background-position:right center;background-repeat:no-repeat;'
 				});
 
 				button.on('click', (event) => {

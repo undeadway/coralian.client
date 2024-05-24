@@ -20,7 +20,9 @@
     "url": "https://gitee.com/undeadway/coralian.client/issues"
   },
   "homepage": "http://codes.waygc.net/project/?coralian.client",
-  "dependencies": {
+  "devDependencies": {
+    "coralian": "0.0.19",
+    "jquery":">=1.9.0"
   },
   "directories": {
     "doc": "doc",
